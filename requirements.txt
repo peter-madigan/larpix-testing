@@ -1,0 +1,4 @@
+Django~=2.2.4
+qrcode~=6.1
+django-simple-history~=2.7.3
+Pillow~=2.2.2
