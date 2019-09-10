@@ -18,8 +18,9 @@ ARG PROJECT_DIR=/app
 RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
-# COPY * $PROJECT_DIR
+COPY requirements.txt $PROJECT_DIR
 RUN pip install -r requirements.txt
+COPY * $PROJECT_DIR/
 
 # EXPOSE 8000
 ENTRYPOINT ["python", "manage.py"]
