@@ -41,6 +41,7 @@ def test_status_logic(prev_key, new_key):
     else:
         return 'U'
 
+qrcode_font = '/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf'
 def generate_qrcode(obj):
     '''
     Generates a qr code linking to admin modify url
@@ -67,14 +68,14 @@ def generate_qrcode(obj):
 
     img_text = '{}{}{:08d}'.format(model_name, obj.version, pk).replace(' ','').upper()
     fontsize = 1
-    font = ImageFont.truetype('Andale Mono.ttf', fontsize)
+    font = ImageFont.truetype(qrcode_font, fontsize)
     text_width, text_height = draw.textsize(img_text, font=font)
     while text_width < img_width*0.8 and text_height < img_height*0.8 and \
         fontsize < 48:
         fontsize += 1
-        font = ImageFont.truetype('Andale Mono.ttf', fontsize)
+        font = ImageFont.truetype(qrcode_font, fontsize)
         text_width, text_height = draw.textsize(img_text, font=font)
-    font = ImageFont.truetype('Andale Mono.ttf', fontsize)
+    font = ImageFont.truetype(qrcode_font, fontsize)
     text_width, text_height = draw.textsize(img_text, font=font)
 
     text_img = Image.new("RGBA", (img_width, img_height), (0,0,0,0))

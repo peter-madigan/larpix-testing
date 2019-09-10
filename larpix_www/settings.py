@@ -26,6 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '192.168.99.100',
+    'web.larpix-db-stack.sandbox.stable.spin.nersc.org',
 ]
 
 # Application definition
@@ -79,11 +80,17 @@ WSGI_APPLICATION = 'larpix_www.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+  #      'ENGINE': 'django.db.backends.sqlite3',
+  #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'larpix_db',
+        'USER': 'larpix',
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
-
+if 'DB_PASSWORD_FILE' in os.environ:
+    DATABASES['default']['PASSWORD'] = open(os.environ['DB_PASSWORD_FILE']).read()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
