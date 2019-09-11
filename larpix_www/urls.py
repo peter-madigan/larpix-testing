@@ -19,7 +19,20 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework import routers
+from . import views
+
+import larpix_testing_db.urls as larpix_testing_db_urls
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewset)
+router.register(r'groups', views.GroupViewset)
+router.register(r'sites', views.SiteViewset)
+
 urlpatterns = [
-    path('admin/', admin.site.urls)
+    path('', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+    + larpix_testing_db_urls.urlpatterns

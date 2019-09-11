@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'larpix_testing_db.apps.LarpixTestingDBConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,6 +92,8 @@ DATABASES = {
 }
 if 'DB_PASSWORD_FILE' in os.environ:
     DATABASES['default']['PASSWORD'] = open(os.environ['DB_PASSWORD_FILE']).read()
+elif 'DB_PASSWORD' in os.environ:
+    DATABASES['default']['PASSWORD'] = os.environ['DB_PASSWORD']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -141,4 +144,9 @@ MEDIA_URL = '/media/'
 SITE_ID = 2
 
 # Other settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated']
+}
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
