@@ -25,14 +25,16 @@ from . import views
 import larpix_testing_db.urls as larpix_testing_db_urls
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewset)
-router.register(r'groups', views.GroupViewset)
-router.register(r'sites', views.SiteViewset)
+router.register(r'user', views.UserViewset)
+router.register(r'group', views.GroupViewset)
+router.register(r'site', views.SiteViewset)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('larpix_testing_db/', include((larpix_testing_db_urls.router.urls,'larpix_testing_db')))
+    ] \
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
-    + larpix_testing_db_urls.urlpatterns
+    + larpix_testing_db_urls.urlpatterns \

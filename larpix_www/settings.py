@@ -25,7 +25,7 @@ SECRET_KEY = 'b3@hq7xogxlb6go=azmk$%j4x+anc3h*dy_ks=tl8y4*vm+%ks'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.99.100',
+    '192.168.99.101',
     'web.larpix-db-stack.sandbox.stable.spin.nersc.org',
 ]
 

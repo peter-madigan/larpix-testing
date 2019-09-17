@@ -52,7 +52,9 @@ def generate_qrcode(obj):
     pk = obj.pk
     if not obj.pk:
         return None
-    data = 'https://' + str(Site.objects.get_current()) + reverse('admin:{0}_{1}_change'.format(app_label, model_name), args=(pk,))
+    #data = 'https://' + str(Site.objects.get_current()) + reverse('admin:{0}_{1}_change'.format(app_label, model_name), args=(pk,))
+    # data = reverse('{0}:{1}-detail'.format(app_label, model_name), args=(pk,))
+    data = '{}/{}/{}'.format(app_label, model_name, pk)
 
     qr = qrcode.QRCode(
         version=None,
@@ -66,7 +68,7 @@ def generate_qrcode(obj):
     img_width, img_height = img.size
     draw = ImageDraw.Draw(img)
 
-    img_text = '{}{}{:08d}'.format(model_name, obj.version, pk).replace(' ','').upper()
+    img_text = '{}{:08d}'.format(model_name, pk).replace(' ','').upper()
     fontsize = 1
     font = ImageFont.truetype(qrcode_font, fontsize)
     text_width, text_height = draw.textsize(img_text, font=font)
@@ -141,7 +143,7 @@ class LArPixDBObject_with_qrcode(models.Model):
         '''
         Generate qr code on save
         '''
-        super(LArPixDBObject_with_qrcode,self).save(*args, **kwargs)
+        super(LArPixDBObject_with_qrcode, self).save(*args, **kwargs)
         if not self.qrcode or not os.path.exists(self.qrcode.path):
             qrcode_img = generate_qrcode(self)
             qrcode_img_name = '{}{:08d}.png'.format(self._meta.model_name, self.id)
@@ -152,7 +154,9 @@ class LArPixDBObject_with_qrcode(models.Model):
                 content=ContentFile(qrcode_io.getvalue()),
                 save=False
             )
-            super(LArPixDBObject_with_qrcode,self).save(*args, **kwargs)
+            if 'force_insert' in kwargs:
+                kwargs['force_insert'] = False
+            super(LArPixDBObject_with_qrcode, self).save(*args, force_update=True, **kwargs)
 
 class ASIC(LArPixDBObject, LArPixDBObject_with_note, LArPixDBObject_with_qrcode):
     '''

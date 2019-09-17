@@ -15,4 +15,4 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class SiteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Site
-        fields = ['id', 'domain_name', 'display_name']
+        fields = ['id']
