@@ -22,6 +22,5 @@ COPY requirements.txt $PROJECT_DIR
 RUN pip install -r requirements.txt
 # COPY * $PROJECT_DIR/
 
-EXPOSE 8000
 ENTRYPOINT ["python", "manage.py"]
 CMD ["runserver", "0:8000"]
