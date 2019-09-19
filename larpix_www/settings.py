@@ -27,6 +27,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '192.168.99.101',
     'web.larpix-db-stack.sandbox.stable.spin.nersc.org',
+    'web.larpix-db-stack.dev-cattle.stable.spin.nersc.org',
+    'web.larpix-db-stack.prod-cattle.stable.spin.nersc.org'
 ]
 
 # Application definition
