@@ -2,5 +2,6 @@ Django~=2.2.4
 qrcode
 django-simple-history
 djangorestframework
+django-filter
 Pillow
 mysqlclient
