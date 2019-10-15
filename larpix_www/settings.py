@@ -25,13 +25,17 @@ SECRET_KEY = 'b3@hq7xogxlb6go=azmk$%j4x+anc3h*dy_ks=tl8y4*vm+%ks'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.99.100',
+    '192.168.99.101',
     'web.larpix-db-stack.sandbox.stable.spin.nersc.org',
+    'web.larpix-db-stack.dev-cattle.stable.spin.nersc.org',
+    'web.larpix-db-stack.prod-cattle.stable.spin.nersc.org'
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'django_filters',
     'larpix_testing_db.apps.LarpixTestingDBConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,6 +95,8 @@ DATABASES = {
 }
 if 'DB_PASSWORD_FILE' in os.environ:
     DATABASES['default']['PASSWORD'] = open(os.environ['DB_PASSWORD_FILE']).read()
+elif 'DB_PASSWORD' in os.environ:
+    DATABASES['default']['PASSWORD'] = os.environ['DB_PASSWORD']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -141,4 +147,10 @@ MEDIA_URL = '/media/'
 SITE_ID = 2
 
 # Other settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

@@ -1,8 +1,14 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r'asic', views.ASICViewSet)
+router.register(r'pcb', views.PCBViewSet)
+router.register(r'test_result', views.TestResultViewSet)
+router.register(r'logbook_entry', views.LogbookEntryViewSet)
+router.register(r'connection', views.ConnectionViewSet)
+
 urlpatterns = [
-    path('', views.Home, name='Home'),
-    path('asic/list', views.ASICListView.as_view(), name='ASICListView'),
-    path('asic/create', views.ASICCreateView.as_view(), name='ASICCreateView')
+    path('larpix_testing_db/', include(router.urls))
 ]
